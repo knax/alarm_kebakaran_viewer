@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Alarm Kebakaran Viewer</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="maps" style="width: 100vw; height: 100vw"></div>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApWfUaEC5yUMlj32fi0VOBGBiE3NmVmfM&libraries=places,drawing,visualization"></script>
+<script>
+  const map = new google.maps.Map(document.getElementById('maps'), {
+    zoom: 5,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    center: {
+      lat: -10.307716,
+      lng: 120.865688
+    },
+    gestureHandling: 'greedy'
+  });
+
+  fetch('/marker_data.php').then((res) => res.json()).then(data => {
+    console.log(data);
+    const markers = data.map(row => {
+      const marker = new google.maps.Marker({
+        position: {
+          lat: +row.lat_1,
+          lng: +row.long_1,
+        },
+        map: map,
+        title: 'yo'
+      });
+      return marker;
+    });
+
+  });
+</script>
+</body>
+</html>
